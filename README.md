@@ -6,3 +6,9 @@ Currently written and built to support IAM authentication in AWS.
 
 To see usage, call the script with the '-h' or '--help' flag. 
 
+
+## Usage
+
+````
+echo "usage: ./vault-replace [-authmethod method] [-host vaulthost] [-role vaultrole] [-path secretpath] | [-h]"
+````

@@ -10,7 +10,7 @@ usage()
 # eg: ./script.sh sample.xml sample2.xml
 if [ $# -gt 0 ]; then
 else
-    echo "Please supply a list of files to secret-replace!"
+    echo "Please check the help docs for how to use vault-replace!"
     exit 1
 fi
 
@@ -49,16 +49,17 @@ done
 vault auth -method=$authmethod -address=$address role=$role header_value=$header_value
 
 # read secrets from app path in vault. hold in memory.
+# Remove bottom newline
+# Remove first 3 lines of the table that displays secrets
 vault read -address=$address $secret_path | head -n -1 | tail -n -3 > secrets
 
 
-declare -A secretmap
+# for each secret
+    # search list of files for matching key value enclosed in {}
+    # replace {} with secret value
 while read line; do
     splitline=( $line )
 # ${splitline[0]} is key, ${splitline[1]} is value
-
-#    echo "/${splitline[0]}/"
-#    echo "${splitline[1]}"
 
     key="${splitline[0]}"
     value="${splitline[1]}"
@@ -69,8 +70,3 @@ while read line; do
     done
     
 done < secrets
-
-
-# for each secret
-    # search list of files for matching key value enclosed in ${}
-    # replace ${} with secret value
