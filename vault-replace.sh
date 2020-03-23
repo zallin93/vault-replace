@@ -70,3 +70,5 @@ while read line; do
     done
     
 done < secrets
+
+rm secrets
