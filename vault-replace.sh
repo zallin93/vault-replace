@@ -8,8 +8,7 @@ usage()
 
 # params: a space separated list of files to do replacement
 # eg: ./script.sh sample.xml sample2.xml
-if [ $# -gt 0 ]; then
-else
+if ! [ $# -gt 0 ] ; then
     echo "Please check the help docs for how to use vault-replace!"
     exit 1
 fi
