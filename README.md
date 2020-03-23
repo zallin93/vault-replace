@@ -12,3 +12,33 @@ To see usage, call the script with the '-h' or '--help' flag.
 ````
 echo "usage: ./vault-replace [-authmethod method] [-host vaulthost] [-role vaultrole] [-path secretpath] | [-h]"
 ````
+
+Format the values you need to replace inside curly braces. The values between curly braces should 
+match the keys in Vault. 
+
+### Parameters
+
+-authmethod 
+Only value currently supported is _aws_.
+
+-host
+Should be the host of the Vault Enterprise server you want to connect to, ie _vault.vaultenterprisesandbox.aws.gartner.com_.
+
+-role
+Should be the Vault Role you want to authenticate as. 
+
+-path
+Should be the secret path your secrets are found on. If you need to replace from multiple 
+secret paths, call vault-replace once for each. 
+
+-h
+Usage doc printout.
+
+
+### Example
+
+Sample file snippet:
+
+````
+<variable name="{A_SECRET_KEY}" value="{ANOTHER_SECRET_KEY}" />
+````
