@@ -38,8 +38,7 @@ while [ "$1" != "" ]; do
         -h | --help )           usage
                                 exit
                                 ;;
-        * )                     usage
-                                exit 1
+        * )                     break
     esac
     shift
 done
