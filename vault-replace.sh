@@ -49,7 +49,7 @@ vault auth -method=$authmethod -address=$address role=$role header_value=$header
 # read secrets from app path in vault. hold in memory.
 # Remove bottom newline
 # Remove first 3 lines of the table that displays secrets
-vault read -address=$address $secret_path | head -n -1 | tail -n -3 > secrets
+vault read -address=$address $secret_path | head -n -1 | tail -n +4 > secrets
 
 
 # for each secret
