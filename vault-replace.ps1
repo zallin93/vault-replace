@@ -12,7 +12,7 @@ function usage {
 
 $address = "https://$($vaultHost)"
 
-vault login -method="$($authmethod)" -address="$($address)" role="$($role)" header_value="$($vaultHost)"
+vault login -method="$($authmethod)" -address="$($address)" role="$($role)" header_value="$($vaultHost)" > $null
 
 # read secrets from app path in vault. hold in memory.
 # Remove bottom newline
@@ -26,13 +26,9 @@ foreach($line in Get-Content .\secrets) {
     # $secretArray = $line.split()
     $key = $secretArray[0]
     $value = $secretArray[1]
-
-    $secretArray
     
     (Get-Content $file).replace( "{$($key)}", "$($value)" ) | Set-Content $file
 }
 
 # cleanup by removing temp secrets file
 Remove-Item .\secrets
-
-$file
