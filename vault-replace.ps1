@@ -6,10 +6,6 @@ param(
     $authmethod = "aws"
 )
 
-function usage {
-    Write-Host "usage: vault-replace [-authmethod method] [-host vaulthost] [-role vaultrole] [-path secretpath] | [-h]"
-}
-
 $address = "https://$($vaultHost)"
 
 vault login -method="$($authmethod)" -address="$($address)" role="$($role)" header_value="$($vaultHost)" > $null
@@ -17,13 +13,11 @@ vault login -method="$($authmethod)" -address="$($address)" role="$($role)" head
 # read secrets from app path in vault. hold in memory.
 # Remove bottom newline
 # Remove first 3 lines of the table that displays secrets
-# vault read -address=$address $path | head -n -1 | tail -n +4 > secrets
 vault read -address="$($address)" "$($path)" | Select-Object -skip 1 -last 10000000 | Select-Object -skip 3 | Out-File -FilePath .\secrets
 
 # for each secret, replace the key/value pairs in the file
 foreach($line in Get-Content .\secrets) {
     $secretArray = $line -split '\s+'
-    # $secretArray = $line.split()
     $key = $secretArray[0]
     $value = $secretArray[1]
     

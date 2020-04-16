@@ -49,6 +49,12 @@ Sample file snippet:
 Untested, the Windows port uses Powershell to execute the Vault secret fetching 
 and secret replacement. 
 
+### Usage
+
+````
+.\vault-replace -vaultHost <vault-hostname> -role <aws-role> -path <secret-path> -file <replace-file>
+````
+
 Currently only works supplying a single file. 
 
 TODO: Add support for list of files, like bash impl.
