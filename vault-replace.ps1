@@ -11,18 +11,13 @@ $address = "https://$($vaultHost)"
 vault login -method="$($authmethod)" -address="$($address)" role="$($role)" header_value="$($vaultHost)" > $null
 
 # read secrets from app path in vault. hold in memory.
-# Remove bottom newline
 # Remove first 3 lines of the table that displays secrets
-vault read -address="$($address)" "$($path)" | Select-Object -skip 1 -last 10000000 | Select-Object -skip 3 | Out-File -FilePath .\secrets
+$vaultResponse = $( vault read -format=json -address="$($address)" "$($path)" | ConvertFrom-Json )
+$data = $vaultResponse.data
 
 # for each secret, replace the key/value pairs in the file
-foreach($line in Get-Content .\secrets) {
-    $secretArray = $line -split '\s+'
-    $key = $secretArray[0]
-    $value = $secretArray[1]
-    
+$data.PSObject.Properties | ForEach-Object {
+    $key = $_.Name
+    $value = $_.Value
     (Get-Content $file).replace( "{$($key)}", "$($value)" ) | Set-Content $file
 }
-
-# cleanup by removing temp secrets file
-Remove-Item .\secrets
