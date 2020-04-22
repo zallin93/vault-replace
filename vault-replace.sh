@@ -64,7 +64,7 @@ while read line; do
 
     for replacefile in "$@"
     do
-        sed -i -e "s/{$key}/$value/g" $replacefile
+        sed -i -e "s|{$key}|$value|g" $replacefile
     done
     
 done < secrets
